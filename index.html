@@ -350,7 +350,7 @@ function topicName(t){const [k,v]=t.split('-');return k=='bai'?'Bài '+v+(N[v-1]
 async function rs(){const el=$('#rs');
 if(!sb||!ME){el.innerHTML='<h3>Kết quả</h3><p class="hint">Đăng nhập (qua Việc nhà) để xem kết quả của cả nhà.</p>';return}
 el.innerHTML='<p class="hint">Đang tải…</p>';
-try{const {data,error}=await sb.from('hoa_results').select('*').not('topic','like','anh:%').not('topic','like','tin:%').not('topic','like','ly:%').order('created_at',{ascending:false}).limit(40);if(error)throw error;
+try{const {data,error}=await sb.from('hoa_results').select('*').not('topic','like','anh:%').not('topic','like','tin:%').not('topic','like','ly:%').not('topic','like','toan:%').order('created_at',{ascending:false}).limit(40);if(error)throw error;
 el.innerHTML='<h3>Kết quả gần đây</h3>'+((data||[]).map(r=>`<p style="margin:8px 0"><b>${esc(MEM[r.user_id]||'Ai đó')}</b> · ${esc(topicName(r.topic))}${r.total?` · <b>${r.score}/${r.total}</b>`:' · ✅ đã học'}<br><span class="hint">${new Date(r.created_at).toLocaleString('vi-VN')}</span></p>`).join('')||'<p class="hint">Chưa có kết quả nào.</p>')}catch(e){el.innerHTML='<p class="hint">Không tải được: '+esc(e.message)+'</p>'}}
 document.querySelector('[data-t=t5]').addEventListener('click',rs);
 toggles();les();sk();lab();qz();assigned();acct();
